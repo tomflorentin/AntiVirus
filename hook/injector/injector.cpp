@@ -36,7 +36,6 @@ int main(int ac, char**av, char**env)
 	std::cout << pi.dwProcessId << std::endl;
 
 	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pi.dwProcessId);
-
 	LPVOID pDllPath = VirtualAllocEx(hProcess, 0, strlen(DllPath) + 1,
 		MEM_COMMIT, PAGE_READWRITE);
 
@@ -46,8 +45,8 @@ int main(int ac, char**av, char**env)
 	HANDLE hLoadThread = CreateRemoteThread(hProcess, 0, 0,
 		(LPTHREAD_START_ROUTINE)GetProcAddress(GetModuleHandleA("Kernel32.dll"),
 			"LoadLibraryA"), pDllPath, 0, 0);
-
-
+	std::cout << "Dll injected" << std::endl;
+	std::cout << GetLastError() << std::endl;
 	WaitForSingleObject(hLoadThread, INFINITE);
 
 
