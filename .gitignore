@@ -1,2 +1,8 @@
 
 hook/\.vs/
+
+hook/hook/Debug/
+
+hook/injector/Debug/
+
+hook/target/Debug/

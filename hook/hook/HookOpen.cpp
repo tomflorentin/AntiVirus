@@ -20,6 +20,11 @@ __kernel_entry NTSTATUS __stdcall HookNtCreateFile(
 {
 	ntCreate NtCreateFile = (ntCreate)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtCreateFile");
 	std::wcout << L"You are trying to open " << ObjectAttributes->ObjectName->Buffer << std::endl;
+	if (wcsstr(ObjectAttributes->ObjectName->Buffer, L"blbl")) {
+		MessageBoxA(NULL, "Unable to open this file", "", 0);
+		hook->PlaceHook();
+		return false;
+	}
 	hook->RemoveHook();
 	NTSTATUS status = NtCreateFile(FileHandle, DesiredAccess, ObjectAttributes, IoStatusBlock, AllocationSize, FileAttributes, ShareAccess, CreateDisposition, CreateOptions, EaBuffer, EaLength);
 	hook->PlaceHook();

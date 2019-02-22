@@ -7,8 +7,10 @@
 
 int main()
 {
-	Sleep(3000);
-	MessageBox(NULL, L"Test", L"I'm not hooked !", 0);
+	Sleep(500);
+	FILE *f;
+	fopen_s(&f, "bllblblb", "w+");
+	//MessageBox(NULL, L"Test", L"I'm not hooked !", 0);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
