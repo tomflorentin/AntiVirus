@@ -6,3 +6,9 @@ hook/hook/Debug/
 hook/injector/Debug/
 
 hook/target/Debug/
+
+\.vs/
+
+electron/node_modules/
+
+electron/\.idea/
