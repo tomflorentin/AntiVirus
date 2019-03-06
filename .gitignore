@@ -6,3 +6,27 @@ hook/hook/Debug/
 hook/injector/Debug/
 
 hook/target/Debug/
+
+hook/Debug/
+
+interprocess/interprocess/\.vs/
+
+interprocess/interprocess/Debug/interprocess\.tlog/
+
+interprocess/interprocess/x64/
+
+interprocess/interprocess/Debug/
+
+interprocess/test/Debug/
+
+interprocess/test/x64/
+
+interprocess/TestManaged/bin/
+
+interprocess/TestManaged/obj/
+
+service/\.vs/
+
+service/bin/
+
+service/obj/
