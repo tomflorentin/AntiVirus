@@ -5,11 +5,13 @@
 #include <iostream>
 #include <Windows.h>
 
-int main()
+int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance,
+	LPSTR lpCmdLine, int nCmdShow)
 {
-	Sleep(500);
+	std::cout << "Ok" << std::endl;
+	Sleep(5000);
 	FILE *f;
-	fopen_s(&f, "bllblblb", "w+");
+	fopen_s(&f, "blblbl", "w+");
 	//MessageBox(NULL, L"Test", L"I'm not hooked !", 0);
 }
 

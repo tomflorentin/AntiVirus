@@ -38,6 +38,6 @@ void HookOpen()
 	}
 	catch (std::exception const &ex)
 	{
-		std::cerr << "Unable to place hook " << ex.what() << std::endl;
+		MessageBox(NULL, L"Error", L"Error", 0);
 	}
 }
