@@ -11,7 +11,10 @@
 // Windows Header Files
 #include <windows.h>
 #include <iostream>
+#include <tuple>
 #include <winternl.h>
+
+using namespace std;
 
 
 // reference additional headers your program requires here

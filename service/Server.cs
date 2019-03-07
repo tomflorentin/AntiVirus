@@ -29,7 +29,29 @@ namespace service
             int connectedClient = CountClients();
 
             for (int i = 0; i < connectedClient; i++)
-                Console.WriteLine("Client online : " + GetClientPid(i));
+                RefreshClient(i);
+        }
+
+        private void RefreshClient(int index)
+        {
+            IntPtr commandPtr = GetClientOrder(index);
+            IntPtr argsPtr;
+           // IntPtr pathPtr;
+
+
+            if (commandPtr == IntPtr.Zero)
+                return;
+            string command = Marshal.PtrToStringUni(commandPtr);
+            if (command == string.Empty)
+                return;
+            argsPtr = GetClientArg(index);
+            //pathPtr = GetClientPath(index);
+            string args = Marshal.PtrToStringUni(argsPtr);
+            //string path = Marshal.PtrToStringUni(pathPtr);
+
+            Actions.Execute(command, args);
+            FreePtr(commandPtr);
+            FreePtr(argsPtr);
         }
 
         #region imports
@@ -56,18 +78,24 @@ namespace service
         [DllImport(@"C:\Users\tomfl\Desktop\AntiVirus\interprocess\interprocess\Debug\interprocess.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         static extern int GetClientRole(int index); // Get client PID
         [DllImport(@"C:\Users\tomfl\Desktop\AntiVirus\interprocess\interprocess\Debug\interprocess.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.LPWStr)]
         static extern string GetClientPath(int pid); // Get client path
         [DllImport(@"C:\Users\tomfl\Desktop\AntiVirus\interprocess\interprocess\Debug\interprocess.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-        static extern string GetClientOrder(int pid); // Get client order (and set to null)
+        static extern IntPtr GetClientOrder(int pid); // Get client order (and set to null)
         [DllImport(@"C:\Users\tomfl\Desktop\AntiVirus\interprocess\interprocess\Debug\interprocess.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-        static extern string GetClientArg(int pid); // Get client order (and set to null)
+        static extern IntPtr GetClientArg(int pid); // Get client order (and set to null)
 
         [DllImport(@"C:\Users\tomfl\Desktop\AntiVirus\interprocess\interprocess\Debug\interprocess.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.LPWStr)]
         static extern string GetServiceOrder(); // Get order from service (and set to null)
         [DllImport(@"C:\Users\tomfl\Desktop\AntiVirus\interprocess\interprocess\Debug\interprocess.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.LPWStr)]
         static extern string GetServiceArg(); // Get order from service (and set to null)
         [DllImport(@"C:\Users\tomfl\Desktop\AntiVirus\interprocess\interprocess\Debug\interprocess.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         static extern void SendServiceOrder(string order, string args);  // Send an order to service
+
+        [DllImport(@"C:\Users\tomfl\Desktop\AntiVirus\interprocess\interprocess\Debug\interprocess.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+        static extern void FreePtr(IntPtr ptr); // Free a pointer to string returner by an other api function
         #endregion
     }
 }

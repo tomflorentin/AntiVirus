@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "HookOpen.h"
 #include "Hook.h"
+#include "global.h"
 
 Hook *hook;
 
-__kernel_entry NTSTATUS __stdcall HookNtCreateFile(
+__kernel_entry NTSTATUS __cdecl HookNtCreateFile(
 	OUT PHANDLE           FileHandle,
 	IN ACCESS_MASK        DesiredAccess,
 	IN POBJECT_ATTRIBUTES ObjectAttributes,
@@ -18,14 +19,10 @@ __kernel_entry NTSTATUS __stdcall HookNtCreateFile(
 	IN ULONG              EaLength
 )
 {
-	ntCreate NtCreateFile = (ntCreate)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtCreateFile");
-	std::wcout << L"You are trying to open " << ObjectAttributes->ObjectName->Buffer << std::endl;
-	if (wcsstr(ObjectAttributes->ObjectName->Buffer, L"blbl")) {
-		MessageBoxA(NULL, "Unable to open this file", "", 0);
-		hook->PlaceHook();
-		return false;
-	}
 	hook->RemoveHook();
+	ntCreate NtCreateFile = (ntCreate)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtCreateFile");
+	connection->Send(L"msgbox", wstring(L"J'essaye d'ouvrir ") + ObjectAttributes->ObjectName->Buffer);
+
 	NTSTATUS status = NtCreateFile(FileHandle, DesiredAccess, ObjectAttributes, IoStatusBlock, AllocationSize, FileAttributes, ShareAccess, CreateDisposition, CreateOptions, EaBuffer, EaLength);
 	hook->PlaceHook();
 	return status;

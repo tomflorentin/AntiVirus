@@ -8,10 +8,10 @@
 int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
-	std::cout << "Ok" << std::endl;
-	Sleep(5000);
-	FILE *f;
-	fopen_s(&f, "blblbl", "w+");
+	Sleep(1000);
+	FILE *file = NULL;
+	fopen_s(&file, "Blbl", "r");
+	Sleep(10000);
 	//MessageBox(NULL, L"Test", L"I'm not hooked !", 0);
 }
 

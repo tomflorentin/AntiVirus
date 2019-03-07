@@ -15,6 +15,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <objbase.h>
 
 #define DLLEXPORT extern "C" __declspec(dllexport)
 

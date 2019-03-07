@@ -8,7 +8,7 @@ public:
 	Client(char _role);
 	Client(SOCKET sock);
 	~Client();
-	void Refresh(wstring const &cmd = L"ping", wstring const &args = L"");
+	void Refresh(wstring const &cmd = L"", wstring const &args = L"");
 	wstring const &getPath() const;
 	wstring getOrder();
 	wstring getArgs();

@@ -51,6 +51,7 @@ void Client::Refresh(wstring const &cmd, wstring const &args)
 	packet toSend = { 0 };
 	packet toRecv = { 0 };
 
+
 	toSend.role = self.role;
 	wcscpy_s(toSend.filepath, self.filepath.c_str());
 	wcsncpy_s(toSend.cmd, cmd.c_str(), 254);
@@ -61,16 +62,13 @@ void Client::Refresh(wstring const &cmd, wstring const &args)
 
 	if (!Recv(toRecv))
 		return;
-
-	std::cerr << "RECV" << endl;
-
 	remote.filepath = toRecv.filepath;
 	remote.role = toRecv.role;
 	remote.pid = toRecv.pid;
 
-	if (wcscmp(toRecv.cmd, L"ping"))
+	if (wcslen(toRecv.cmd))
 		this->order = toRecv.cmd;
-	if (wcscmp(toRecv.cmd, L""))
+	if (wcslen(toRecv.argument))
 		this->args = toRecv.argument;
 }
 

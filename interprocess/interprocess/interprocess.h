@@ -22,3 +22,5 @@ DLLEXPORT WCHAR const *GetClientArg(int index); // // Get arg from client (and s
 DLLEXPORT WCHAR const *GetServiceOrder(); // Get order from service (and set to null)
 DLLEXPORT WCHAR const *GetServiceArg(); // // Get arg from service (and set to null)
 DLLEXPORT void SendServiceOrder(WCHAR *order, WCHAR *args);  // Send an order to service
+
+DLLEXPORT void FreePtr(void *ptr); // Free a pointer to string returner by an other api function

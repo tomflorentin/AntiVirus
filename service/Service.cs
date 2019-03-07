@@ -24,7 +24,7 @@ namespace service
             var server = new Server();
 
             System.Timers.Timer serverClock = new System.Timers.Timer();
-            serverClock.Interval = 200;
+            serverClock.Interval = 500;
             serverClock.Elapsed += new System.Timers.ElapsedEventHandler(server.Refresh);
             serverClock.Start();
         }
