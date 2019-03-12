@@ -8,11 +8,15 @@
 int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
+	LoadLibrary(L"../Debug/hook.dll");
+
 	Sleep(1000);
+
+
 	FILE *file = NULL;
-	fopen_s(&file, "Blbl", "r");
-	Sleep(10000);
-	//MessageBox(NULL, L"Test", L"I'm not hooked !", 0);
+	fopen_s(&file, "ceci est peut etre un virus", "w");
+
+	return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

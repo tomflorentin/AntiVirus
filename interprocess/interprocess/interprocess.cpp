@@ -84,15 +84,19 @@ DLLEXPORT void Refresh()
 
 DLLEXPORT int GetClientPid(int index)
 {
-	if (srv)
+	if (srv) {
+		srv->Refresh();
 		return srv->getPid(index);
+	}
 	return 0;
 }
 
 DLLEXPORT int GetClientRole(int index)
 {
-	if (srv)
+	if (srv) {
+		srv->Refresh();
 		return srv->getRole(index);
+	}
 	return 0;
 }
 
@@ -100,6 +104,7 @@ DLLEXPORT int CountClients()
 {
 	if (!srv)
 		return -1;
+	srv->Refresh();
 	return srv->countConnections();
 }
 
@@ -110,15 +115,16 @@ DLLEXPORT WCHAR *GetClientPath(int index)
 	try {
 		if (!srv)
 			throw exception("no server");
+		srv->Refresh();
 		auto const &tmp = srv->getPath(index);
-		ptr = (WCHAR *)CoTaskMemAlloc(sizeof(WCHAR) * (1 + tmp.size()));
-		wcscpy_s(ptr, tmp.size(), tmp.c_str());
+		ptr = (WCHAR *)malloc(sizeof(WCHAR) * (1 + tmp.size()));
+		wcscpy(ptr, tmp.c_str());
 		return ptr;
 	}
 	catch (...)
 	{
-		ptr = (WCHAR *)CoTaskMemAlloc(sizeof(WCHAR) * 2);
-		wcscpy_s(ptr, 1, L"");
+		ptr = (WCHAR *)malloc(sizeof(WCHAR) * 2);
+		wcscpy(ptr, L"");
 		return ptr;
 	}
 }
@@ -130,6 +136,7 @@ DLLEXPORT WCHAR *GetClientOrder(int index)
 	try {
 		if (!srv)
 			throw exception("no server");
+		srv->Refresh();
 		auto const tmp = srv->getOrder(index);
 		ptr = (WCHAR *)malloc(sizeof(WCHAR) * (1 + tmp.size()));
 		wcscpy(ptr, tmp.c_str());
@@ -150,6 +157,7 @@ DLLEXPORT WCHAR *GetClientArg(int index)
 	try {
 		if (!srv)
 			throw exception("no server");
+		srv->Refresh();
 		auto const &tmp = srv->getArgs(index);
 		ptr = (WCHAR *)calloc(sizeof(WCHAR), (1 + tmp.size()));
 		wcscpy(ptr, tmp.c_str());
@@ -172,14 +180,15 @@ DLLEXPORT WCHAR *GetServiceOrder()
 	try {
 		if (!cli)
 			throw exception("no client");
+		cli->Refresh();
 		auto const &tmp = cli->getOrder();
-		ptr = (WCHAR *)CoTaskMemAlloc(sizeof(WCHAR) * (1 + tmp.size()));
+		ptr = (WCHAR *)malloc(sizeof(WCHAR) * (1 + tmp.size()));
 		wcscpy(ptr, tmp.c_str());
 		return ptr;
 	}
 	catch (...)
 	{
-		ptr = (WCHAR *)CoTaskMemAlloc(sizeof(WCHAR) * 2);
+		ptr = (WCHAR *)malloc(sizeof(WCHAR) * 2);
 		wcscpy(ptr, L"");
 		return ptr;
 	}
@@ -192,14 +201,15 @@ DLLEXPORT WCHAR *GetServiceArg()
 	try {
 		if (!cli)
 			throw exception("no client");
+		cli->Refresh();
 		auto const &tmp = cli->getArgs();
-		ptr = (WCHAR *)CoTaskMemAlloc(sizeof(WCHAR) * (1 + tmp.size()));
+		ptr = (WCHAR *)malloc(sizeof(WCHAR) * (1 + tmp.size()));
 		wcscpy(ptr, tmp.c_str());
 		return ptr;
 	}
 	catch (...)
 	{
-		ptr = (WCHAR *)CoTaskMemAlloc(sizeof(WCHAR) * 2);
+		ptr = (WCHAR *)malloc(sizeof(WCHAR) * 2);
 		wcscpy(ptr, L"");
 		return ptr;
 	}
@@ -213,8 +223,8 @@ DLLEXPORT void SendServiceOrder(WCHAR *order, WCHAR *args)
 
 DLLEXPORT void SendOrder(int index, WCHAR *order, WCHAR *args)
 {
-	if (cli)
-		cli->Refresh(order, args);
+	if (srv)
+		srv->sendOrder(index, order, args);
 }
 
 #pragma region 

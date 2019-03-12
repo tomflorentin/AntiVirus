@@ -16,6 +16,7 @@ public:
 	char getRole() const;
 
 private:
+	time_t lastPacket;
 	bool Recv(packet &data);
 	bool Send(packet const &data);
 	wstring path = L"unknown";

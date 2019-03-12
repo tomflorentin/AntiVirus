@@ -6,6 +6,7 @@ Client::Client(char role)
 {
 	sockaddr_in server = { 0 };
 
+	lastPacket = time(NULL);
 	sock = socket(PF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(5900);
@@ -30,6 +31,8 @@ Client::Client(char role)
 
 Client::Client(SOCKET _sock) : sock(_sock)
 {
+	lastPacket = time(NULL);
+
 	WCHAR buff[1024];
 	GetModuleFileName(NULL, buff, 1023);
 	this->self.filepath = wstring(buff);
@@ -51,6 +54,8 @@ void Client::Refresh(wstring const &cmd, wstring const &args)
 	packet toSend = { 0 };
 	packet toRecv = { 0 };
 
+	if (time(NULL) - lastPacket > 30)
+		throw exception("Client timed out");
 
 	toSend.role = self.role;
 	wcscpy_s(toSend.filepath, self.filepath.c_str());
@@ -62,6 +67,7 @@ void Client::Refresh(wstring const &cmd, wstring const &args)
 
 	if (!Recv(toRecv))
 		return;
+	lastPacket = time(NULL);
 	remote.filepath = toRecv.filepath;
 	remote.role = toRecv.role;
 	remote.pid = toRecv.pid;

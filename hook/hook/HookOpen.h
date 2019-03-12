@@ -4,7 +4,7 @@
 
 void HookOpen();
 
-typedef NTSTATUS(WINAPI *ntCreate)(
+typedef NTSTATUS(__kernel_entry WINAPI *ntCreate)(
 	OUT PHANDLE           FileHandle,
 	IN ACCESS_MASK        DesiredAccess,
 	IN POBJECT_ATTRIBUTES ObjectAttributes,
