@@ -1,23 +1,28 @@
+body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
 .left-row
 {
     border-right: 1px solid #FFF;
     border-bottom: 1px solid #FFF;
     padding: 0;
-    height: 25%;
+    height: 30%;
 }
 
 .left-row-top
 {
     border-right: 1px solid #FFF;
     border-bottom: 1px solid #FFF;
-    height: 25%;
+    height: 30%;
 }
 
 .left-row-bot
 {
     border-right: 1px solid #FFF;
     border-bottom: 1px solid #FFF;
-    height: 25%;
+    height: 30%;
 }
 
 .top-annoncer
@@ -36,14 +41,14 @@
 
 .my_row
 {
-    height: 60px;
+    height: 80px;
     padding: 0 0 0 15px;
     margin: 0;
 }
 
 .last_row
 {
-    height: 160px;
+    height: 308px;
 }
 
 .my_row:hover
@@ -55,14 +60,19 @@
 .second_col
 {
     margin: 0;
-    width: 200px;
-    height: 400px;
+    width: 900px;
+    height: 500px;
     background-color: white;
 }
 .third_col
 {
     margin: 0;
     padding:  0;
-    height: 153px;
+    height: 234px;
     background-color: #F4F7F8;
+}
+
+li
+{
+    list-style: none;
 }
