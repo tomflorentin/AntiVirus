@@ -14,6 +14,7 @@ function createWindow () {
       nodeIntegration: true
     }
   })
+  mainWindow.setResizable(false)
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
