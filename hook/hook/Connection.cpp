@@ -21,12 +21,13 @@ Connection::~Connection()
 
 tuple<wstring, wstring> Connection::Read()
 {
-	wstring cmd = GetServiceOrder();
-	wstring arg;
+	WCHAR const *orderPtr = GetServiceOrder();
+	WCHAR const *argPtr = GetServiceArg();
+	auto tup = tuple<wstring, wstring>(wstring(orderPtr), wstring(argPtr));
 
-	if (cmd != L"")
-		arg = GetServiceArg();
-	return tuple<wstring, wstring>(cmd, arg);
+	free((void*)orderPtr);
+	free((void*)argPtr);
+	return tup;
 }
 
 void Connection::Send(wstring const &cmd, wstring const &arg)

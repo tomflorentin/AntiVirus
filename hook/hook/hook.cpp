@@ -28,15 +28,12 @@ void *Hook::findFunction(wstring const & dll, wstring const & function)
 
 	sprintf_s(funcNameTmp, "%ls", function.c_str());
 	hDll = GetModuleHandle(dll.c_str());
-	if (hDll == nullptr)
+	if (hDll == INVALID_HANDLE_VALUE)
 		throw (runtime_error("Unable to load DLL"));
 	hFunc = GetProcAddress(hDll, funcNameTmp);
 	if (hFunc == nullptr) {
-		CloseHandle(hDll);
 		throw (runtime_error("Unable to locate function"));
 	}
-	CloseHandle(hDll);
-	CloseHandle(hFunc);
 	return hFunc;
 }
 
@@ -45,7 +42,6 @@ bool Hook::PlaceHook()
 	DWORD protection;
 
 	VirtualProtect(funcPtr, sizeof(DWORD), PAGE_EXECUTE_READWRITE, &protection); // Unprotect zone
-
 	memcpy(this->overridedBytes, funcPtr, 5); // Save bytes before overriding
 	memset(funcPtr, 0x90, 5); // Prepare zone with NOP asm operation
 

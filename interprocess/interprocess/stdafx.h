@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <vector>
 #include <objbase.h>
+#include <time.h>
 
 #define DLLEXPORT extern "C" __declspec(dllexport)
 
