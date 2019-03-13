@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,12 @@ namespace service
         {
             Debug.WriteLine("STARTING ALPHA DEFENDER WINDOWS SERVICE");
 
+            // REMOVE THIS ZONE
+
+
+            // END OF ZONE
+
+            var http = new Http();
             var server = new Server();
 
             System.Timers.Timer serverClock = new System.Timers.Timer();

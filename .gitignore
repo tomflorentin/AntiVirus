@@ -40,3 +40,5 @@ service/obj/
 notification/bin/
 
 notification/obj/
+
+service/packages/
