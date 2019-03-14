@@ -18,7 +18,7 @@ namespace service
         {
             listener = new HttpListener();
             listener.Start();
-            listener.Prefixes.Add("http://127.0.0.1:8081/");
+            listener.Prefixes.Add("http://127.0.0.1:6890/");
 
             listener.BeginGetContext(new AsyncCallback(Callback), listener);
         }
@@ -35,9 +35,43 @@ namespace service
                     return "OK";
                 case "/json":
                     return JsonConvert.SerializeObject(new { a = 1, b = "blbl" });
+                case "/getInfo":
+                    return getInfo(request, body);
                 default:
                     return "404";
             }
+        }
+
+        private struct info
+        {
+            public string web;
+            public string exploit;
+            public string malware;
+            public string last;
+            public string next;
+            public string update;
+            public string item;
+            public string detection;
+            public string timeDetection;
+        };
+        private string getInfo(string request, string body)
+        {
+
+            info stru = new info();
+            Microsoft.Win32.RegistryKey key;
+
+            using  (key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\AlphaDefender")) {
+                stru.web = key.GetValue("webProtection") as string;
+                stru.exploit = key.GetValue("exploitProtection") as string;
+                stru.malware = key.GetValue("malwareProtection") as string;
+                stru.last = key.GetValue("lastScan") as string;
+                stru.next = key.GetValue("nextScan") as string;
+                stru.update = key.GetValue("update") as string;
+                stru.item = key.GetValue("itemScanned") as string;
+                stru.detection = key.GetValue("scanDetection") as string;
+                stru.timeDetection = key.GetValue("runpeDetection") as string;
+            }
+            return JsonConvert.SerializeObject(stru);       
         }
 
         private void Callback(IAsyncResult result)
