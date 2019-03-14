@@ -14,7 +14,6 @@ $(document).ready(function() {
         data: JSON.stringify(),
         timeout: 10000,
         success: function (data) {
-            alert("succes");
             let infoData = data;
             changeLog(infoData);
         },
@@ -22,6 +21,24 @@ $(document).ready(function() {
             alert("cé nul");
         }
     });
+    setInterval(function () {
+        $.ajax({
+            url: "http://127.0.0.1:6890/getInfo",
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(),
+            timeout: 10000,
+            success: function (data) {
+                let infoData = data;
+                changeLog(infoData);
+            },
+            error: function () {
+                alert("cé nul");
+            }
+        });
+    }, 500);
+
 })
 
 function changeLog(infoData)
