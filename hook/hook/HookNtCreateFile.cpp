@@ -1,9 +1,22 @@
 #include "stdafx.h"
-#include "HookOpen.h"
 #include "Hook.h"
 #include "global.h"
 
-Hook *hook;
+Hook *manageNtCreateFile;
+
+typedef NTSTATUS(__kernel_entry WINAPI *ntCreate)(
+	OUT PHANDLE           FileHandle,
+	IN ACCESS_MASK        DesiredAccess,
+	IN POBJECT_ATTRIBUTES ObjectAttributes,
+	OUT PIO_STATUS_BLOCK  IoStatusBlock,
+	IN PLARGE_INTEGER     AllocationSize,
+	IN ULONG              FileAttributes,
+	IN ULONG              ShareAccess,
+	IN ULONG              CreateDisposition,
+	IN ULONG              CreateOptions,
+	IN PVOID              EaBuffer,
+	IN ULONG              EaLength
+	);
 
 __kernel_entry NTSTATUS WINAPI HookNtCreateFile(
 	OUT PHANDLE           FileHandle,
@@ -19,16 +32,14 @@ __kernel_entry NTSTATUS WINAPI HookNtCreateFile(
 	IN ULONG              EaLength
 )
 {
-	hook->RemoveHook();
+	manageNtCreateFile->RemoveHook();
 
 	if (!wcsstr(ObjectAttributes->ObjectName->Buffer, L"virus")) {
 		ntCreate NtCreateFile = (ntCreate)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtCreateFile");
 		NTSTATUS status = NtCreateFile(FileHandle, DesiredAccess, ObjectAttributes, IoStatusBlock, AllocationSize, FileAttributes, ShareAccess, CreateDisposition, CreateOptions, EaBuffer, EaLength);
-		hook->PlaceHook();
+		manageNtCreateFile->PlaceHook();
 		return status;
 	}
-
-
 
 	ntCreate NtCreateFile = (ntCreate)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtCreateFile");
 	connection->Send(L"confirm", wstring(L"Oppening suspicious file (") + ObjectAttributes->ObjectName->Buffer + wstring(L")"));
@@ -41,12 +52,12 @@ __kernel_entry NTSTATUS WINAPI HookNtCreateFile(
 
 	if (order == L"allow") {
 		NTSTATUS status = NtCreateFile(FileHandle, DesiredAccess, ObjectAttributes, IoStatusBlock, AllocationSize, FileAttributes, ShareAccess, CreateDisposition, CreateOptions, EaBuffer, EaLength);
-		hook->PlaceHook();
+		manageNtCreateFile->PlaceHook();
 		return status;
 	}
 
 	if (order == L"block") {
-		hook->PlaceHook();
+		manageNtCreateFile->PlaceHook();
 		return 0xC000000F; // No suck file NT_STATUS
 	}
 
@@ -56,13 +67,14 @@ __kernel_entry NTSTATUS WINAPI HookNtCreateFile(
 	return 0;
 }
 
-void HookOpen()
+bool PlaceNtCreateFileHook()
 {
 	try {
-		hook = new Hook(L"ntdll.dll", L"NtCreateFile", HookNtCreateFile);
+		manageNtCreateFile = new Hook(L"ntdll.dll", L"NtCreateFile", HookNtCreateFile);
+		return true;
 	}
 	catch (std::exception const &ex)
 	{
-		MessageBox(NULL, L"Error", L"Error", 0);
+		return false;
 	}
 }

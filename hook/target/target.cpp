@@ -5,17 +5,16 @@
 #include <iostream>
 #include <Windows.h>
 
-int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance,
-	LPSTR lpCmdLine, int nCmdShow)
+int main()
 {
 	LoadLibrary(L"../Debug/hook.dll");
+	Sleep(5000);
 
-	Sleep(1000);
+	HKEY hkey;
 
-
-	FILE *file = NULL;
-	fopen_s(&file, "ceci est peut etre un virus", "w");
-
+	LONG createStatus = RegCreateKey(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", &hkey); //Creates a key       
+	LONG status = RegSetValueEx(hkey, L"MyApp", 0, REG_SZ, (BYTE*)L"blbl", (4 + 1) * sizeof(wchar_t));
+	getchar();
 	return 0;
 }
 

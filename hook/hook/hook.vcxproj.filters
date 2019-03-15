@@ -24,13 +24,13 @@
     <ClInclude Include="Hook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HookOpen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Connection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="func.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,10 +44,19 @@
     <ClCompile Include="Hook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HookOpen.cpp">
+    <ClCompile Include="Connection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Connection.cpp">
+    <ClCompile Include="HookNtCreateFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HookNtOpenProcess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HookNtOpenKey.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

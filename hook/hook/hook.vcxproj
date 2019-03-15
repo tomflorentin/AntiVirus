@@ -148,9 +148,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Connection.h" />
+    <ClInclude Include="func.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="Hook.h" />
-    <ClInclude Include="HookOpen.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -158,13 +158,16 @@
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Hook.cpp" />
-    <ClCompile Include="HookOpen.cpp" />
+    <ClCompile Include="HookNtCreateFile.cpp" />
+    <ClCompile Include="HookNtOpenKey.cpp" />
+    <ClCompile Include="HookNtOpenProcess.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

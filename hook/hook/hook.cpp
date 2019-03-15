@@ -15,7 +15,6 @@ Hook::Hook(wstring const &dll, wstring const &function, void *hook, bool hookNow
 		PlaceHook();
 }
 
-
 Hook::~Hook()
 {
 }
@@ -52,7 +51,7 @@ bool Hook::PlaceHook()
 
 	DWORD tmp; // useless vairable to avoid crash
 	VirtualProtect(funcPtr, sizeof(DWORD), protection, &tmp); // Reprotect zone
-	std::wcout << L"Function hooked !" << std::endl;
+	std::cout << "Placing hook " << std::endl;
 	return true;
 }
 
@@ -65,7 +64,7 @@ bool Hook::RemoveHook()
 	memcpy(funcPtr, this->overridedBytes, 5); // Restore original bytes on API
 	DWORD tmp; // useless vairable to avoid crash
 	VirtualProtect(funcPtr, sizeof(DWORD), protection, &tmp); // Reprotect zone
-	std::wcout << L"Function UnHooked !" << std::endl;
+	std::cout << "Removing hook " << std::endl;
+
 	return true;
 }
-

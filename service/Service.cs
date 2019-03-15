@@ -22,16 +22,13 @@ namespace service
         {
             Debug.WriteLine("STARTING ALPHA DEFENDER WINDOWS SERVICE");
 
-            // REMOVE THIS ZONE
-
-
-            // END OF ZONE
-
             var http = new Http();
             var server = new Server();
 
-            System.Timers.Timer serverClock = new System.Timers.Timer();
-            serverClock.Interval = 500;
+            System.Timers.Timer serverClock = new System.Timers.Timer
+            {
+                Interval = 500
+            };
             serverClock.Elapsed += new System.Timers.ElapsedEventHandler(server.Refresh);
             serverClock.Start();
         }

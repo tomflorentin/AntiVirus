@@ -13,6 +13,8 @@
 #include <iostream>
 #include <tuple>
 #include <winternl.h>
+#include <tlhelp32.h>
+#include <vector>
 
 using namespace std;
 
