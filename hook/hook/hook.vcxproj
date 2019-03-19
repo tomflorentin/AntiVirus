@@ -147,6 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AntiRunPE.h" />
+    <ClInclude Include="Confirmation.h" />
     <ClInclude Include="Connection.h" />
     <ClInclude Include="func.h" />
     <ClInclude Include="global.h" />
@@ -155,12 +157,16 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AntiRunPE.cpp" />
+    <ClCompile Include="Confirmation.cpp" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Hook.cpp" />
     <ClCompile Include="HookNtCreateFile.cpp" />
     <ClCompile Include="HookNtOpenKey.cpp" />
     <ClCompile Include="HookNtOpenProcess.cpp" />
+    <ClCompile Include="HookNtUnmapViewOfSection.cpp" />
+    <ClCompile Include="HookNtWriteVirtualMemory.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

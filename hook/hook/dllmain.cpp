@@ -3,8 +3,10 @@
 #include <iostream>
 #include "Hook.h"
 #include "Connection.h"
+#include "AntiRunPE.h"
 
 Connection *connection = nullptr;
+AntiRunPE *antiRunPE = nullptr;
 
 // APP_INIT path (to load DLL to each new process) :
 // Computer\HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion\Windows
@@ -21,7 +23,10 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     case DLL_PROCESS_ATTACH:
 
 		connection = new Connection();
+		antiRunPE = new AntiRunPE();
 		PlaceNtCreateKeyHook();
+		PlaceNtUnmapViewOfSectionHook();
+		PlaceNtWriteVirtualMemoryHook();
 
 		break;
     case DLL_THREAD_ATTACH:

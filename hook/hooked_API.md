@@ -105,3 +105,14 @@ __kernel_entry NTSTATUS WINAPI NtSetContextThread(
 - Log this action in the RunPE detector
 
 
+
+## GetProcAddress
+
+```
+FARPROC GetProcAddress(
+  HMODULE hModule,
+  LPCSTR  lpProcName
+);
+```
+
+- Disallow applications to resolve dynamically hooked symbols. Give them instead hooked ntdll functions. 

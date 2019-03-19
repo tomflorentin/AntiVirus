@@ -5,15 +5,35 @@
 #include <iostream>
 #include <Windows.h>
 
+typedef NTSTATUS(__kernel_entry WINAPI *FuncNtWriteVirtualMemory)(
+	IN HANDLE               ProcessHandle,
+	IN PVOID                BaseAddress,
+	IN PVOID                Buffer,
+	IN ULONG                NumberOfBytesToWrite,
+	OUT PULONG              NumberOfBytesWritten OPTIONAL);
+
+typedef NTSTATUS(__kernel_entry WINAPI *FuncNtUnmapViewOfSection)(
+	IN HANDLE               ProcessHandle,
+	IN PVOID                BaseAddress);
+
 int main()
 {
 	LoadLibrary(L"../Debug/hook.dll");
 	Sleep(5000);
 
-	HKEY hkey;
+	//HKEY hkey;
 
-	LONG createStatus = RegCreateKey(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", &hkey); //Creates a key       
-	LONG status = RegSetValueEx(hkey, L"MyApp", 0, REG_SZ, (BYTE*)L"blbl", (4 + 1) * sizeof(wchar_t));
+	//LONG createStatus = RegCreateKey(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", &hkey); //Creates a key       
+	//LONG status = RegSetValueEx(hkey, L"MyApp", 0, REG_SZ, (BYTE*)L"blbl", (4 + 1) * sizeof(wchar_t));
+
+
+
+	FuncNtUnmapViewOfSection NtUnmapViewOfSection = (FuncNtUnmapViewOfSection)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtUnmapViewOfSection");
+	FuncNtWriteVirtualMemory NtWriteVirtualMemory = (FuncNtWriteVirtualMemory)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtWriteVirtualMemory");
+
+	NtUnmapViewOfSection(NULL, NULL);
+	NtWriteVirtualMemory((void*)0x01, NULL, NULL, 0, NULL);
+
 	getchar();
 	return 0;
 }

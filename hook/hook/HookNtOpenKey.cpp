@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Hook.h"
 #include "func.h"
-#include "global.h"
+#include "Confirmation.h"
 
 Hook *manageNtCreateKey;
 
@@ -49,25 +49,16 @@ __kernel_entry NTSTATUS WINAPI HookNtCreateKey(
 		if (iequals(k, ObjectAttributes->ObjectName->Buffer)) {
 			FuncNtCreateKey NtCreateKey = (FuncNtCreateKey)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtCreateKey");
 
-			connection->Send(L"confirm", wstring(L"Adding program to automatic startup"));
+			auto confirmation = Confirmation(wstring(L"Adding program to automatic startup"));
 			wstring order = L"";
-			while (order != L"allow" && order != L"block" && order != L"kill") {
-				order = get<0>(connection->Read());
-				Sleep(500);
-			}
-
-			if (order == L"allow") {
+			
+			if (confirmation.Wait()) {
 				NTSTATUS status = NtCreateKey(KeyHandle, DesiredAccess, ObjectAttributes, TitleIndex, Class, CreateOptions, Disposition);
 				manageNtCreateKey->PlaceHook();
 				return status;
-			}
-
-			if (order == L"block") {
+			} else {
+				manageNtCreateKey->PlaceHook();
 				return 0xC000000F; // No suck file NT_STATUS
-			}
-
-			if (order == L"kill") {
-				exit(84); // Insert here killing method
 			}
 		}
 
