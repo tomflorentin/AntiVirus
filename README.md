@@ -11,7 +11,7 @@ This is a very ambitious project.
  This is the main part of the program. it runs as a Windows Service, with LOCAL_MACHINE maximum privileges.
  It monitors all applications running on the computer, and watch suspicious locations. It also run runtime memory scans, and hard drive scans.
  In the future, the service will also include a Peer to Peer module, to connect to virus database.
- 
+
  ### Hook DLL - C++ / x86 ASM
 The Hook DLL is injected into every running application to have a control on it from the inside.
 The DLL uses inline hooking to edit the lowest level windows API functions, and hook them.
@@ -42,15 +42,15 @@ Like the DLL, it role is to check applications system calls, and filter them.
 
  ### Tom Florentin
  ![
-](https://intra.epitech.eu/file/userprofil/commentview/tom.florentin.jpg)
+](https://image.noelshack.com/fichiers/2019/12/2/1552955415-tom-florentin.jpg)
  EPITECH Strasbourg
  2nd year student
  tom.florentin@epitech.eu
 
- 
+
 ### Quentin Thomas
 ![
-](https://intra.epitech.eu/file/userprofil/commentview/quentin1.thomas.jpg)
+](https://image.noelshack.com/fichiers/2019/12/2/1552955415-quentin1-thomas.jpg)
  EPITECH Strasbourg
  2nd year student
 quentin1.thomas@epitech.eu
