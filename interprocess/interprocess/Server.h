@@ -20,7 +20,6 @@ public:
 
 private:
 	void Accept();
-	int port;
 	SOCKET sock;
 	vector<unique_ptr<Client>> clients;
 };

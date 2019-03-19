@@ -28,12 +28,12 @@ int main()
 
 
 
-	FuncNtUnmapViewOfSection NtUnmapViewOfSection = (FuncNtUnmapViewOfSection)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtUnmapViewOfSection");
-	FuncNtWriteVirtualMemory NtWriteVirtualMemory = (FuncNtWriteVirtualMemory)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtWriteVirtualMemory");
+	//FuncNtUnmapViewOfSection NtUnmapViewOfSection = (FuncNtUnmapViewOfSection)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtUnmapViewOfSection");
+	//FuncNtWriteVirtualMemory NtWriteVirtualMemory = (FuncNtWriteVirtualMemory)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtWriteVirtualMemory");
 
-	NtUnmapViewOfSection(NULL, NULL);
-	NtWriteVirtualMemory((void*)0x01, NULL, NULL, 0, NULL);
-
+	//NtUnmapViewOfSection(NULL, NULL);
+	//NtWriteVirtualMemory((void*)0x9, NULL, NULL, 0, NULL);
+	GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtUnmapViewOfSection");
 	getchar();
 	return 0;
 }

@@ -29,8 +29,6 @@ void Server::Listen()
 	}
 	unsigned long block = 1;
 	ioctlsocket(sock, FIONBIO, &block);
-
-	wcout << L"Listening on port " << port << endl;
 }
 
 void Server::Refresh()

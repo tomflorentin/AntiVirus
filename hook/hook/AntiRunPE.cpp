@@ -43,5 +43,6 @@ void AntiRunPE::checkRunPe()
 
 void AntiRunPE::flagRunPe()
 {
+	Beep(5000, 5000);
 	std::cerr << "RUN PE // RUN PE // RUN PE" << std::endl;
 }

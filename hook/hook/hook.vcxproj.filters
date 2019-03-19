@@ -80,5 +80,8 @@
     <ClCompile Include="HookNtWriteVirtualMemory.cpp">
       <Filter>Source Files\Hooks</Filter>
     </ClCompile>
+    <ClCompile Include="HookGetProcAddress.cpp">
+      <Filter>Source Files\Hooks</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

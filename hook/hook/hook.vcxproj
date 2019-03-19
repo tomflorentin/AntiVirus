@@ -162,6 +162,7 @@
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Hook.cpp" />
+    <ClCompile Include="HookGetProcAddress.cpp" />
     <ClCompile Include="HookNtCreateFile.cpp" />
     <ClCompile Include="HookNtOpenKey.cpp" />
     <ClCompile Include="HookNtOpenProcess.cpp" />

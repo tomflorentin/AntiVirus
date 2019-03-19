@@ -27,6 +27,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 		PlaceNtCreateKeyHook();
 		PlaceNtUnmapViewOfSectionHook();
 		PlaceNtWriteVirtualMemoryHook();
+		PlaceGetProcAddressHook();
 
 		break;
     case DLL_THREAD_ATTACH:
