@@ -17,13 +17,31 @@ namespace service
             var actions = new Dictionary<string, action>
             {
                 { "msgbox", Msgbox },
-                { "confirm", Confirm }
+                { "confirm", Confirm },
+                {"delete", Delete }
             };
 
             foreach (var a in actions)
                 if (a.Key == command)
                     return a.Value(args, index);
             return false;
+        }
+
+        private static bool Delete(string args, int index)
+        {
+            int pid = Server.GetClientPid(index);
+
+            new Task(() => {
+                while(System.IO.File.Exists(args))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(args);
+                    } catch { System.Threading.Thread.Sleep(500); };
+                }
+            }).Start();
+
+            return true;
         }
 
         private static bool Msgbox(string args, int index)

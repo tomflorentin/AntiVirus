@@ -3,8 +3,7 @@
 #include "stdafx.h"
 
 #define SERVICE 1
-#define GUI 2
-#define APP 3
+#define APP 2
 
 struct packet
 {

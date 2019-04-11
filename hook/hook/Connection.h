@@ -21,7 +21,7 @@ private:
 	typedef void(_cdecl *_StopServer)(); // Stop listening
 	_StopServer StopServer;
 
-	typedef int(_cdecl *_ConnectClient)(bool isGui); // Connect to server
+	typedef int(_cdecl *_ConnectClient)(); // Connect to server
 	_ConnectClient ConnectClient;
 	typedef void(_cdecl *_DisconnectClient)(); // Disconnect from server
 	_DisconnectClient DisconnectClient;

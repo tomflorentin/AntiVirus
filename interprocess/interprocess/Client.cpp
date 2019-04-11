@@ -2,7 +2,7 @@
 #include "Client.h"
 
 
-Client::Client(char role)
+Client::Client()
 {
 	sockaddr_in server = { 0 };
 
@@ -10,20 +10,19 @@ Client::Client(char role)
 	sock = socket(PF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(5900);
-	InetPton(AF_INET, L"127.0.0.1", &server.sin_addr.s_addr);
+	InetPtonW(AF_INET, L"127.0.0.1", &server.sin_addr.s_addr);
 
 	if (sock == INVALID_SOCKET)
-		std::exception("unable to open socket");
+		throw std::exception("unable to open socket");
 	int status = connect(sock, (struct sockaddr *)&server, sizeof(server));
 	if (status)
-		std::exception("connection failed");
-
+		throw std::exception("connection failed");
 	WCHAR buff[1024];
-	GetModuleFileName(NULL, buff, 1023);
+	GetModuleFileNameW(NULL, buff, 1023);
 	this->self.filepath = buff;
-	this->self.role = role;
+	this->self.role = APP;
 	this->self.pid = GetCurrentProcessId();
-	cout << "Connected ! " << endl;
+	cout << "Connected !!! " << endl;
 
 	unsigned long block = 1;
 	ioctlsocket(sock, FIONBIO, &block);
@@ -34,7 +33,7 @@ Client::Client(SOCKET _sock) : sock(_sock)
 	lastPacket = time(NULL);
 
 	WCHAR buff[1024];
-	GetModuleFileName(NULL, buff, 1023);
+	GetModuleFileNameW(NULL, buff, 1023);
 	this->self.filepath = wstring(buff);
 	this->self.role = SERVICE;
 	this->self.pid = GetCurrentProcessId();

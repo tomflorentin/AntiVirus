@@ -5,7 +5,7 @@
 class Client
 {
 public:
-	Client(char _role);
+	Client();
 	Client(SOCKET sock);
 	~Client();
 	void Refresh(wstring const &cmd = L"", wstring const &args = L"");

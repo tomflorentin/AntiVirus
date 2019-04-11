@@ -18,7 +18,7 @@ int main(int ac, char**av, char**env)
 	ZeroMemory(&pi, sizeof(pi));
 
 	// start the program up
-	CreateProcess(L"../Debug/target.exe",   // the path
+	CreateProcess(L"../Debug/stub.exe",   // the path
 		NULL,        // Command line
 		NULL,           // Process handle not inheritable
 		NULL,           // Thread handle not inheritable

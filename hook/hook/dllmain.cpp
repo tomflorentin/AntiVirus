@@ -21,14 +21,15 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-
-		connection = new Connection();
+		try {
+			connection = new Connection();
+		}
+		catch (...) { std::cerr << "Error connecting server" << std::endl; };
 		antiRunPE = new AntiRunPE();
 		PlaceNtCreateKeyHook();
 		PlaceNtUnmapViewOfSectionHook();
 		PlaceNtWriteVirtualMemoryHook();
 		PlaceGetProcAddressHook();
-
 		break;
     case DLL_THREAD_ATTACH:
 		break;

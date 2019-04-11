@@ -2,6 +2,8 @@
 #include "Confirmation.h"
 #include "global.h"
 
+#define SELF_REMOVE_STRING  TEXT("cmd.exe /C timeout 5 & Del /f /q \"%s\"")
+
 Confirmation::Confirmation(wstring const &reason)
 {
 	connection->Send(L"confirm", reason);
@@ -23,8 +25,9 @@ bool Confirmation::Wait()
 	}
 
 	if (order == L"kill") {
-		this->Kill();
+		Kill();
 	}
+	return true;
 }
 
 
@@ -34,5 +37,20 @@ Confirmation::~Confirmation()
 
 void Confirmation::Kill()
 {
-	exit(84); // Insert here killing method
+	if (connection != nullptr) {
+		connection->Send(L"delete", L"");
+	}
+	else {
+		TCHAR szModuleName[MAX_PATH];
+		TCHAR szCmd[2 * MAX_PATH];
+		STARTUPINFO si = { 0 };
+		PROCESS_INFORMATION pi = { 0 };
+
+		GetModuleFileName(NULL, szModuleName, MAX_PATH);
+		StringCbPrintf(szCmd, 2 * MAX_PATH, SELF_REMOVE_STRING, szModuleName);
+		CreateProcess(NULL, szCmd, NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi);
+		CloseHandle(pi.hThread);
+		CloseHandle(pi.hProcess);
+	}
+	exit(84);
 }

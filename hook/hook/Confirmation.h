@@ -8,9 +8,9 @@ public:
 	Confirmation(wstring const &reason);
 	bool Wait();
 	~Confirmation();
+	static void Kill();
 
 private:
-	void Kill();
 	wstring order;
 };
 

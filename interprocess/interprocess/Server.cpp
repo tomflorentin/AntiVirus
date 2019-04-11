@@ -12,11 +12,11 @@ void Server::Listen()
 	sockaddr_in server = { 0 };
 
 	if (sock < 0)
-		throw exception("Unable to create server socket");;
+		throw exception("Unable to create server socket");
 	server.sin_addr.s_addr = htonl(INADDR_ANY);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(5900);
-	InetPton(AF_INET, L"127.0.0.1", &server.sin_addr.s_addr);
+	InetPtonW(AF_INET, L"127.0.0.1", &server.sin_addr.s_addr);
 
 	if (bind(sock, (struct sockaddr *) &server, sizeof server)) {
 		cerr << GetLastError() << endl;

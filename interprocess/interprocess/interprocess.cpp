@@ -32,14 +32,13 @@ DLLEXPORT void StopServer()
 	WSACleanup();
 }
 
-DLLEXPORT int ConnectClient(bool isGui)
+DLLEXPORT int ConnectClient()
 {
 	WSADATA wsaData;
 	WORD wVersionRequested = MAKEWORD(2, 2);
 	WSAStartup(wVersionRequested, &wsaData);
-	char role = isGui ? GUI : APP;
 	try {
-		cli = new Client(role);
+		cli = new Client();
 	}
 	catch (...) {
 		return 1;

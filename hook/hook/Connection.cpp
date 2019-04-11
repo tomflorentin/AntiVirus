@@ -1,17 +1,14 @@
 #include "stdafx.h"
 #include "Connection.h"
 
-
-
 Connection::Connection()
 {
 	if (!importDll())
 		throw exception("Unable to load DLL functions");
 
-	if (ConnectClient(false))
+	if (ConnectClient())
 		throw exception("Unable to connect to service");
 }
-
 
 Connection::~Connection()
 {
@@ -34,8 +31,6 @@ void Connection::Send(wstring const &cmd, wstring const &arg)
 {
 	SendServiceOrder((WCHAR *)cmd.c_str(), (WCHAR *)arg.c_str());
 }
-
-
 
 bool Connection::importDll()
 {

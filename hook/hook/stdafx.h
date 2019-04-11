@@ -15,6 +15,7 @@
 #include <winternl.h>
 #include <tlhelp32.h>
 #include <vector>
+#include <strsafe.h>
 
 using namespace std;
 
